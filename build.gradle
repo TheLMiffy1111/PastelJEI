@@ -1,0 +1,261 @@
+plugins {
+	id "com.crystaelix.loom" version "1.10.0"
+	id "eclipse"
+	id "idea"
+	id "maven-publish"
+	id "net.kyori.blossom" version "[1,2)"
+	id "me.modmuss50.mod-publish-plugin" version "0.8.4"
+}
+
+repositories {
+	mavenCentral()
+	flatDir {
+		dirs "libs"
+	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				url = "https://maven.parchmentmc.net/"
+			}
+		}
+		filter {
+			includeGroup "org.parchmentmc.data"
+		}
+	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				url = "https://maven.nucleoid.xyz/"
+			}
+		}
+		filter {
+			includeGroup "eu.pb4"
+		}
+	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				url = "https://maven.terraformersmc.com/"
+			}
+		}
+		filter {
+			includeGroup "com.terraformersmc"
+			includeGroup "dev.emi"
+		}
+	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				url = "https://maven.blamejared.com/"
+			}
+		}
+		filter {
+			includeGroup "mezz.jei"
+		}
+	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				url = "https://maven.crystaelix.com/releases/"
+			}
+		}
+		filter {
+			includeGroup "thelm.jeidrawables"
+		}
+	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				url = "https://maven.architectury.dev/"
+			}
+		}
+		filter {
+			includeGroup "dev.architectury"
+			includeGroup "me.shedaniel.cloth"
+		}
+	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				url = "https://maven.resourcefulbees.com/repository/terrarium/"
+			}
+		}
+		filter {
+			includeGroup "earth.terrarium"
+		}
+	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				url = "https://dl.cloudsmith.io/public/klikli-dev/mods/maven/"
+			}
+		}
+		filter {
+			includeGroup "com.klikli_dev"
+		}
+	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				url = "https://maven.theillusivec4.top/"
+			}
+		}
+		filter {
+			includeGroup "top.theillusivec4.curios"
+		}
+	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				url = "https://cursemaven.com/"
+			}
+		}
+		filter {
+			includeGroup "curse.maven"
+		}
+	}
+}
+
+def mcVersion = "1.21.1"
+def modName = "PastelJEI"
+def modId = "pasteljei"
+def specVersion = "21.1"
+def vendor = "thelm"
+
+group = "thelm.pasteljei"
+version = "21.1.0"
+
+archivesBaseName = modName
+
+sourceSets {
+	main
+}
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+		vendor = JvmVendorSpec.AZUL
+	}
+	withSourcesJar()
+}
+
+tasks.withType(JavaCompile).configureEach {
+	options.encoding = "UTF-8"
+}
+
+loom {
+	silentMojangMappingsLicense()
+	runs {
+		configureEach {
+			property "forge.logging.console.level", "debug"
+		}
+		client
+		server
+	}
+}
+
+dependencies {
+	// Log4j
+	implementation "org.apache.logging.log4j:log4j-core:2.24.3"
+
+	// Minecraft
+	minecraft "com.mojang:minecraft:1.21.1"
+	mappings loom.layered {
+		officialMojangMappings()
+		parchment "org.parchmentmc.data:parchment-1.21.1:2024.11.17@zip"
+	}
+	neoForge "net.neoforged:neoforge:21.1.180"
+
+	// Cloth Config
+	implementation "dev.architectury:architectury-neoforge:13.0.8"
+	implementation "me.shedaniel.cloth:cloth-config-neoforge:15.0.140"
+
+	// JEI
+	implementation("mezz.jei:jei-1.21.1-neoforge:19.21.2.313") {transitive = false}
+	include(implementation("thelm.jeidrawables:JEIDrawables-NeoForge:21.1.1"))
+
+	// Pastel Dependencies
+	implementation "earth.terrarium:revelationary:1.0.1"
+	implementation("com.klikli_dev:modonomicon-1.21.1-neoforge:1.114.4") {transitive = false}
+	implementation "top.theillusivec4.curios:curios-neoforge:9.5.1+1.21.1"
+	implementation "curse.maven:yeetusexperimentus-635427:5444189"
+
+	// Pastel
+	implementation "curse.maven:pastel-1264556:6708455"
+}
+
+def replacements = [
+	"0@VERSION@": version
+]
+
+blossom {
+	replaceToken(replacements)
+}
+
+processResources {
+	inputs.properties(replacements)
+	filesMatching(["mcmod.info", "META-INF/mods.toml", "META-INF/neoforge.mods.toml"]) {
+		filter {
+			it.replace(replacements)
+		}
+	}
+}
+
+def manifestAttributes = [
+	"Specification-Title": modName,
+	"Specification-Vendor": vendor,
+	"Specification-Version": specVersion,
+	"Implementation-Title": archivesBaseName,
+	"Implementation-Version": version,
+	"Implementation-Vendor": vendor
+]
+
+jar {
+	manifest.attributes(manifestAttributes)
+}
+
+sourcesJar {
+	manifest.attributes(manifestAttributes)
+}
+
+publishing {
+	publications {
+		register("mavenJava", MavenPublication) {
+			artifactId = archivesBaseName
+			artifact remapJar
+			artifact remapSourcesJar
+		}
+	}
+	repositories {
+		if(project.hasProperty("CrystaelixMavenUsername") && project.hasProperty("CrystaelixMavenPassword")) {
+			maven {
+				name = "CrystaelixMaven"
+				url = "https://maven.crystaelix.com/releases/"
+				credentials(PasswordCredentials)
+			}
+		}
+	}
+}
+
+publishMods {
+	file = remapJar.archiveFile
+	version = displayName = project.version
+	changelog = file("changelog.md").text
+	type = STABLE
+	modLoaders.add("neoforge")
+	additionalFiles.from(remapSourcesJar.archiveFile)
+
+	curseforge {
+		accessToken = providers.gradleProperty("curseforge.token")
+		projectId = "1297526"
+		minecraftVersions.add(mcVersion)
+		requires "jei", "pastel"
+	}
+
+	modrinth {
+		accessToken = providers.gradleProperty("modrinth.token")
+		projectId = "YuqPtuF4"
+		minecraftVersions.add(mcVersion)
+		requires "jei", "pastel-mod"
+	}
+}
