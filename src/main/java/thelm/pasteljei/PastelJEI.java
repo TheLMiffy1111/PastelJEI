@@ -151,7 +151,7 @@ public class PastelJEI implements IModPlugin {
 		registration.addRecipeCategories(new TitrationBarrelRecipeCategory());
 		registration.addRecipeCategories(new PrimordialFireBurningRecipeCategory());
 
-		registration.addRecipeCategories(new BlockConversionRecipeCategory(NATURES_STAFF, Component.translatable("item.pastel.natures_staff"), PastelAdvancements.UNLOCK_NATURES_STAFF));	
+		registration.addRecipeCategories(new BlockConversionRecipeCategory(NATURES_STAFF, Component.translatable("item.pastel.natures_staff"), PastelAdvancements.UNLOCK_NATURES_STAFF));
 		registration.addRecipeCategories(new BlockConversionWithChanceRecipeCategory(HEATING, Component.translatable("container.pastel.rei.heating.title"), PastelAdvancements.UNLOCK_IDOLS));
 		registration.addRecipeCategories(new BlockConversionWithChanceRecipeCategory(FREEZING, Component.translatable("container.pastel.rei.freezing.title"), PastelAdvancements.UNLOCK_IDOLS));
 	}

@@ -31,7 +31,7 @@ public class FluidConvertingRecipeCategory<R extends FluidConvertingRecipe> exte
 		addItem(builder, RecipeIngredientRole.INPUT, 30, 5, recipe.getIngredients().get(0), JEIDrawables.SLOT, visible);
 		addItem(builder, RecipeIngredientRole.OUTPUT, 86, 5, recipe.getResultItem(registryAccess()), JEIDrawables.OUTPUT_SLOT, visible);
 	}
-	
+
 	@Override
 	public void createRecipeExtras(IRecipeExtrasBuilder builder, RecipeHolder<R> recipeHolder, IFocusGroup focuses) {
 		if(isVisible(recipeHolder)) {

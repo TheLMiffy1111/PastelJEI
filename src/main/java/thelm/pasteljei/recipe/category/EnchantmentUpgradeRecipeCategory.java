@@ -46,7 +46,7 @@ public class EnchantmentUpgradeRecipeCategory extends AbstractGatedRecipeCategor
 	public static final Component TITLE = Component.translatable("container.pastel.rei.enchantment_upgrading.title");
 	public static final Component TOOLTIP = Component.translatable("container.pastel.rei.enchantment_upgrade.tooltip").withColor(0xDB3564);
 	public static final Component BUTTON = Component.translatable("container.pastel.rei.enchantment_upgrade.button");
-	
+
 	public static final ResourceLocation BACKGROUND = PastelCommon.locate("textures/gui/container/enchanter.png");
 	public static final ResourceDrawable ALTAR = new ResourceDrawable(BACKGROUND, 0, 0, 54, 54);
 	public static final ResourceDrawable OVERENCHANT = new ResourceDrawable(BACKGROUND, 64, 0, 16, 16);
@@ -133,7 +133,7 @@ public class EnchantmentUpgradeRecipeCategory extends AbstractGatedRecipeCategor
 		static final ScreenPosition ZERO = new ScreenPosition(0, 0);
 		final EnchantmentUpgradeRecipe recipe;
 		final List<IRecipeSlotDrawable> slots;
-		int index = 1; 
+		int index = 1;
 
 		public StateHandler(EnchantmentUpgradeRecipe recipe, List<IRecipeSlotDrawable> slots) {
 			this.recipe = recipe;
@@ -191,7 +191,7 @@ public class EnchantmentUpgradeRecipeCategory extends AbstractGatedRecipeCategor
 			Font font = font();
 			Component levelComponent = Component.translatable("container.pastel.rei.enchantment_upgrade.level", index, index + 1);
 			Component reqComponent = Component.translatable("container.pastel.rei.enchantment_upgrade.required_item_count", recipe.getItemScaling().apply(index));
-			guiGraphics.drawString(font, levelComponent, 69, 2, 0x3F3F3F, false);
+			guiGraphics.drawString(font, levelComponent, 69, 2, index >= recipe.getEnchantment().value().getMaxLevel() ? 0xDB3564 : 0x3F3F3F, false);
 			guiGraphics.drawString(font, reqComponent, 69, 70, 0x3F3F3F, false);
 		}
 
