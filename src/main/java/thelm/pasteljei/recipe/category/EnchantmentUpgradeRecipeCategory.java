@@ -21,14 +21,17 @@ import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder;
 import mezz.jei.api.gui.widgets.ISlottedRecipeWidget;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.navigation.ScreenPosition;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -110,17 +113,25 @@ public class EnchantmentUpgradeRecipeCategory extends AbstractGatedRecipeCategor
 	}
 
 	@Override
-	public void getTooltip(ITooltipBuilder tooltip, RecipeHolder<EnchantmentUpgradeRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
-		if((mouseX >= 86 && mouseX < 94 || mouseX >= 96 && mouseX < 104) && mouseY >= 20 && mouseY < 28) {
-			tooltip.add(BUTTON);
-		}
-	}
-
-	@Override
 	public void draw(RecipeHolder<EnchantmentUpgradeRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
 		super.draw(recipeHolder, recipeSlotsView, guiGraphics, mouseX, mouseY);
 		if(isVisible(recipeHolder)) {
 			ALTAR.draw(guiGraphics, 15, 13);
+		}
+	}
+
+	@Override
+	public void getTooltip(ITooltipBuilder tooltip, RecipeHolder<EnchantmentUpgradeRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+		if(isVisible(recipeHolder)) {
+			EnchantmentUpgradeRecipe recipe = recipeHolder.value();
+			if(recipe.getLevelCap() > recipe.getEnchantment().value().getMaxLevel() &&
+					hasAdvancement(PastelAdvancements.OVERENCHANTING) &&
+					mouseX >= 3 && mouseX < 19 && mouseY >= 1 && mouseY < 17) {
+				tooltip.add(TOOLTIP);
+			}
+			if((mouseX >= 86 && mouseX < 94 || mouseX >= 96 && mouseX < 104) && mouseY >= 20 && mouseY < 28) {
+				tooltip.add(BUTTON);
+			}
 		}
 	}
 
@@ -211,14 +222,6 @@ public class EnchantmentUpgradeRecipeCategory extends AbstractGatedRecipeCategor
 		}
 
 		@Override
-		public void getTooltip(ITooltipBuilder tooltip, double mouseX, double mouseY) {
-			if(hasAdvancement(PastelAdvancements.OVERENCHANTING) &&
-					mouseX >= 3 && mouseX < 19 && mouseY >= 1 && mouseY < 17) {
-				tooltip.add(TOOLTIP);
-			}
-		}
-
-		@Override
 		public Optional<RecipeSlotUnderMouse> getSlotUnderMouse(double mouseX, double mouseY) {
 			for(IRecipeSlotDrawable slot : slots) {
 				if(slot.isMouseOver(mouseX, mouseY)) {
@@ -248,7 +251,11 @@ public class EnchantmentUpgradeRecipeCategory extends AbstractGatedRecipeCategor
 
 		@Override
 		public boolean mouseClicked(double mouseX, double mouseY, int button) {
-			return increase ? handler.increase() : handler.decrease();
+			boolean clicked = increase ? handler.increase() : handler.decrease();
+			if(clicked) {
+				Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1F));
+			}
+			return clicked;
 		}
 	}
 }
