@@ -3,6 +3,7 @@ package thelm.pasteljei.recipe.category;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.IntFunction;
+import java.util.function.ToIntFunction;
 import java.util.stream.IntStream;
 
 import earth.terrarium.pastel.PastelCommon;
@@ -92,7 +93,16 @@ public class EnchantmentUpgradeRecipeCategory extends AbstractGatedRecipeCategor
 			builder.addDrawable(MINUS, 86, 20);
 			builder.addDrawable(PLUS, 96, 20);
 			List<IRecipeSlotDrawable> slots = List.copyOf(builder.getRecipeSlots().getSlots());
-			StateHandler stateHandler = new StateHandler(recipe, slots);
+			int index = IntStream.concat(
+					focuses.getItemStackFocuses(RecipeIngredientRole.INPUT).
+					map(f -> f.getTypedValue().getIngredient()).
+					mapToInt(bookToLevel(recipe.getEnchantment())),
+					focuses.getItemStackFocuses(RecipeIngredientRole.OUTPUT).
+					map(f -> f.getTypedValue().getIngredient()).
+					mapToInt(bookToLevel(recipe.getEnchantment())).
+					map(l -> l - 1)).
+					filter(l -> l > 0).min().orElse(1);
+			StateHandler stateHandler = new StateHandler(recipe, slots, index);
 			builder.addSlottedWidget(stateHandler, slots);
 			builder.addGuiEventListener(new StateButton(new ScreenRectangle(86, 20, 8, 8), stateHandler, false));
 			builder.addGuiEventListener(new StateButton(new ScreenRectangle(96, 20, 8, 8), stateHandler, true));
@@ -101,7 +111,7 @@ public class EnchantmentUpgradeRecipeCategory extends AbstractGatedRecipeCategor
 
 	@Override
 	public void getTooltip(ITooltipBuilder tooltip, RecipeHolder<EnchantmentUpgradeRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
-		if((mouseX >= 86 && mouseX < 94 || mouseX >= 96 && mouseX < 20) && mouseY >= 20 && mouseY < 28) {
+		if((mouseX >= 86 && mouseX < 94 || mouseX >= 96 && mouseX < 104) && mouseY >= 20 && mouseY < 28) {
 			tooltip.add(BUTTON);
 		}
 	}
@@ -128,6 +138,10 @@ public class EnchantmentUpgradeRecipeCategory extends AbstractGatedRecipeCategor
 		};
 	}
 
+	public ToIntFunction<ItemStack> bookToLevel(Holder<Enchantment> enchantment) {
+		return stack -> stack.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY).getLevel(enchantment);
+	}
+
 	public class StateHandler implements ISlottedRecipeWidget {
 
 		static final ScreenPosition ZERO = new ScreenPosition(0, 0);
@@ -135,9 +149,10 @@ public class EnchantmentUpgradeRecipeCategory extends AbstractGatedRecipeCategor
 		final List<IRecipeSlotDrawable> slots;
 		int index = 1;
 
-		public StateHandler(EnchantmentUpgradeRecipe recipe, List<IRecipeSlotDrawable> slots) {
+		public StateHandler(EnchantmentUpgradeRecipe recipe, List<IRecipeSlotDrawable> slots, int index) {
 			this.recipe = recipe;
 			this.slots = slots;
+			this.index = index;
 			updateSlots();
 		}
 

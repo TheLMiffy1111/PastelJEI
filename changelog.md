@@ -1,1 +1,1 @@
-Fix overenchanting not changing level text color  
+Make enchantment upgrade category automatically cycle to queried level  
