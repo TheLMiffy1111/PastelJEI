@@ -123,7 +123,7 @@ def specVersion = "21.1"
 def vendor = "thelm"
 
 group = "thelm.pasteljei"
-version = "21.1.0"
+version = "21.1.1"
 
 archivesBaseName = modName
 
@@ -175,13 +175,13 @@ dependencies {
 	include(implementation("thelm.jeidrawables:JEIDrawables-NeoForge:21.1.1"))
 
 	// Pastel Dependencies
-	implementation "earth.terrarium:revelationary:1.0.1"
+	implementation "curse.maven:databank-1181408:6814455"
 	implementation("com.klikli_dev:modonomicon-1.21.1-neoforge:1.114.4") {transitive = false}
 	implementation "top.theillusivec4.curios:curios-neoforge:9.5.1+1.21.1"
 	implementation "curse.maven:yeetusexperimentus-635427:5444189"
 
 	// Pastel
-	implementation "curse.maven:pastel-1264556:6708455"
+	implementation "curse.maven:pastel-1264556:6809085"
 }
 
 def replacements = [
@@ -194,7 +194,7 @@ blossom {
 
 processResources {
 	inputs.properties(replacements)
-	filesMatching(["mcmod.info", "META-INF/mods.toml", "META-INF/neoforge.mods.toml"]) {
+	filesMatching(["mcmod.info", "META-INF/mods.toml", "META-INF/neoforge.mods.toml", "fabric.mod.json"]) {
 		filter {
 			it.replace(replacements)
 		}
@@ -250,6 +250,7 @@ publishMods {
 		projectId = "1297526"
 		minecraftVersions.add(mcVersion)
 		requires "jei", "pastel"
+		incompatible "roughly-enough-items-hacks", "emi"
 	}
 
 	modrinth {
@@ -257,5 +258,6 @@ publishMods {
 		projectId = "YuqPtuF4"
 		minecraftVersions.add(mcVersion)
 		requires "jei", "pastel-mod"
+		incompatible "roughly-enough-items-hacks", "emi"
 	}
 }

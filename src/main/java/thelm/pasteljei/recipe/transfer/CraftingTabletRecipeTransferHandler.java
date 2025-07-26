@@ -7,7 +7,7 @@ import java.util.Optional;
 import earth.terrarium.pastel.inventories.CraftingTabletScreenHandler;
 import earth.terrarium.pastel.inventories.PastelScreenHandlerTypes;
 import earth.terrarium.pastel.recipe.pedestal.PedestalRecipe;
-import earth.terrarium.pastel.recipe.pedestal.PedestalRecipeTier;
+import earth.terrarium.pastel.recipe.pedestal.PedestalTier;
 import mezz.jei.api.gui.ingredient.IRecipeSlotView;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -22,17 +22,17 @@ import thelm.pasteljei.PastelJEI;
 
 public class CraftingTabletRecipeTransferHandler implements IRecipeTransferHandler<CraftingTabletScreenHandler, RecipeHolder<PedestalRecipe>> {
 
-	public final PedestalRecipeTier tier;
+	public final PedestalTier tier;
 	public final RecipeType<RecipeHolder<PedestalRecipe>> recipeType;
 	public final IRecipeTransferHandler<CraftingTabletScreenHandler, RecipeHolder<PedestalRecipe>> wrappedHandler;
 
-	public CraftingTabletRecipeTransferHandler(PedestalRecipeTier tier, IRecipeTransferHandlerHelper transferHelper) {
+	public CraftingTabletRecipeTransferHandler(PedestalTier tier, IRecipeTransferHandlerHelper transferHelper) {
 		this.tier = tier;
 		recipeType = getRecipeType(tier);
 		wrappedHandler = transferHelper.createUnregisteredRecipeTransferHandler(new RecipeTransferInfo(recipeType));
 	}
 
-	public static RecipeType<RecipeHolder<PedestalRecipe>> getRecipeType(PedestalRecipeTier tier) {
+	public static RecipeType<RecipeHolder<PedestalRecipe>> getRecipeType(PedestalTier tier) {
 		return switch(tier) {
 		case BASIC -> PastelJEI.PEDESTAL_BASIC;
 		case SIMPLE -> PastelJEI.PEDESTAL_SIMPLE;
@@ -85,7 +85,7 @@ public class CraftingTabletRecipeTransferHandler implements IRecipeTransferHandl
 
 		@Override
 		public boolean canHandle(CraftingTabletScreenHandler container, RecipeHolder<PedestalRecipe> recipeHolder) {
-			return super.canHandle(container, recipeHolder) && container.getTier().orElse(PedestalRecipeTier.BASIC).compareTo(tier) >= 0;
+			return super.canHandle(container, recipeHolder) && container.getTier().orElse(PedestalTier.BASIC).compareTo(tier) >= 0;
 		}
 	}
 }

@@ -18,20 +18,27 @@ issueTrackerURL = "https://github.com/TheLMiffy1111/PastelJEI/issues"
 
 [[dependencies.pasteljei]]
 	modId = "jei"
-	versionRange = "[19,)"
+	versionRange = "*"
 	type = "required"
 
 [[dependencies.pasteljei]]
 	modId = "jeidrawables"
-	versionRange = "[21,21.2)"
+	versionRange = "*"
 	type = "required"
 
 [[dependencies.pasteljei]]
 	modId = "pastel"
-	versionRange = "[1.0.0-BETA,)"
+	versionRange = "[1.1,)"
 	type = "required"
 
 [[dependencies.pasteljei]]
+	modId = "rei_plugin_compatibilities"
+	versionRange = "*"
+	type = "discouraged"
+	reason = "Pastel has native REI support"
+
+[[dependencies.pasteljei]]
 	modId = "emi"
-	versionRange = "[0,)"
-	type = "incompatible"
+	versionRange = "*"
+	type = "discouraged"
+	reason = "Pastel has native EMI support"

@@ -2,6 +2,9 @@ package thelm.pasteljei;
 
 import java.util.stream.Stream;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import earth.terrarium.pastel.PastelCommon;
 import earth.terrarium.pastel.blocks.idols.FirestarterIdolBlock;
 import earth.terrarium.pastel.blocks.idols.FreezingIdolBlock;
@@ -30,7 +33,7 @@ import earth.terrarium.pastel.recipe.fluid_converting.LiquidCrystalConvertingRec
 import earth.terrarium.pastel.recipe.fluid_converting.MidnightSolutionConvertingRecipe;
 import earth.terrarium.pastel.recipe.fusion_shrine.FusionShrineRecipe;
 import earth.terrarium.pastel.recipe.pedestal.PedestalRecipe;
-import earth.terrarium.pastel.recipe.pedestal.PedestalRecipeTier;
+import earth.terrarium.pastel.recipe.pedestal.PedestalTier;
 import earth.terrarium.pastel.recipe.potion_workshop.PotionWorkshopBrewingRecipe;
 import earth.terrarium.pastel.recipe.potion_workshop.PotionWorkshopCraftingRecipe;
 import earth.terrarium.pastel.recipe.potion_workshop.PotionWorkshopReactingRecipe;
@@ -59,6 +62,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.fml.ModList;
 import thelm.pasteljei.gui.handler.CraftingTabletRecipeClickAreaHandler;
 import thelm.pasteljei.gui.handler.OverlayHidingExtraAreaHandler;
 import thelm.pasteljei.gui.handler.PedestalRecipeClickAreaHandler;
@@ -89,6 +93,7 @@ import thelm.pasteljei.recipe.transfer.PedestalRecipeTransferInfo;
 public class PastelJEI implements IModPlugin {
 
 	public static final ResourceLocation UID = ResourceLocation.parse("pasteljei:pastel");
+	public static final Logger LOGGER = LogManager.getLogger();
 
 	public static IJeiHelpers jeiHelpers;
 	public static IJeiRuntime jeiRuntime;
@@ -129,10 +134,14 @@ public class PastelJEI implements IModPlugin {
 	public void registerCategories(IRecipeCategoryRegistration registration) {
 		jeiHelpers = registration.getJeiHelpers();
 
-		registration.addRecipeCategories(new PedestalRecipeCategory(PedestalRecipeTier.BASIC));
-		registration.addRecipeCategories(new PedestalRecipeCategory(PedestalRecipeTier.SIMPLE));
-		registration.addRecipeCategories(new PedestalRecipeCategory(PedestalRecipeTier.ADVANCED));
-		registration.addRecipeCategories(new PedestalRecipeCategory(PedestalRecipeTier.COMPLEX));
+		if(checkDisabled()) {
+			return;
+		}
+
+		registration.addRecipeCategories(new PedestalRecipeCategory(PedestalTier.BASIC));
+		registration.addRecipeCategories(new PedestalRecipeCategory(PedestalTier.SIMPLE));
+		registration.addRecipeCategories(new PedestalRecipeCategory(PedestalTier.ADVANCED));
+		registration.addRecipeCategories(new PedestalRecipeCategory(PedestalTier.COMPLEX));
 		registration.addRecipeCategories(new AnvilCrushingRecipeCategory());
 		registration.addRecipeCategories(new FusionShrineRecipeCategory());
 		registration.addRecipeCategories(new EnchanterRecipeCategory());
@@ -158,15 +167,19 @@ public class PastelJEI implements IModPlugin {
 
 	@Override
 	public void registerRecipes(IRecipeRegistration registration) {
+		if(checkDisabled()) {
+			return;
+		}
+
 		RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
 		registration.addRecipes(PEDESTAL_BASIC, recipeManager.getAllRecipesFor(PastelRecipeTypes.PEDESTAL).stream().
-				filter(r -> r.value().getTier() == PedestalRecipeTier.BASIC).toList());
+				filter(r -> r.value().getTier() == PedestalTier.BASIC).toList());
 		registration.addRecipes(PEDESTAL_SIMPLE, recipeManager.getAllRecipesFor(PastelRecipeTypes.PEDESTAL).stream().
-				filter(r -> r.value().getTier() == PedestalRecipeTier.SIMPLE).toList());
+				filter(r -> r.value().getTier() == PedestalTier.SIMPLE).toList());
 		registration.addRecipes(PEDESTAL_ADVANCED, recipeManager.getAllRecipesFor(PastelRecipeTypes.PEDESTAL).stream().
-				filter(r -> r.value().getTier() == PedestalRecipeTier.ADVANCED).toList());
+				filter(r -> r.value().getTier() == PedestalTier.ADVANCED).toList());
 		registration.addRecipes(PEDESTAL_COMPLEX, recipeManager.getAllRecipesFor(PastelRecipeTypes.PEDESTAL).stream().
-				filter(r -> r.value().getTier() == PedestalRecipeTier.COMPLEX).toList());
+				filter(r -> r.value().getTier() == PedestalTier.COMPLEX).toList());
 		registration.addRecipes(ANVIL_CRUSHING, recipeManager.getAllRecipesFor(PastelRecipeTypes.ANVIL_CRUSHING));
 		registration.addRecipes(FUSION_SHRINE, recipeManager.getAllRecipesFor(PastelRecipeTypes.FUSION_SHRINE));
 		registration.addRecipes(ENCHANTER, recipeManager.getAllRecipesFor(PastelRecipeTypes.ENCHANTER));
@@ -204,16 +217,20 @@ public class PastelJEI implements IModPlugin {
 
 	@Override
 	public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
+		if(checkDisabled()) {
+			return;
+		}
+
 		IRecipeTransferHandlerHelper transferHelper = registration.getTransferHelper();
-		registration.addRecipeTransferHandler(new PedestalRecipeTransferInfo(PedestalRecipeTier.BASIC));
-		registration.addRecipeTransferHandler(new PedestalRecipeTransferInfo(PedestalRecipeTier.SIMPLE));
-		registration.addRecipeTransferHandler(new PedestalRecipeTransferInfo(PedestalRecipeTier.ADVANCED));
-		registration.addRecipeTransferHandler(new PedestalRecipeTransferInfo(PedestalRecipeTier.COMPLEX));
+		registration.addRecipeTransferHandler(new PedestalRecipeTransferInfo(PedestalTier.BASIC));
+		registration.addRecipeTransferHandler(new PedestalRecipeTransferInfo(PedestalTier.SIMPLE));
+		registration.addRecipeTransferHandler(new PedestalRecipeTransferInfo(PedestalTier.ADVANCED));
+		registration.addRecipeTransferHandler(new PedestalRecipeTransferInfo(PedestalTier.COMPLEX));
 		registration.addRecipeTransferHandler(PedestalScreenHandler.class, PastelScreenHandlerTypes.PEDESTAL, RecipeTypes.CRAFTING, 0, 9, 16, 36);
-		registration.addRecipeTransferHandler(new CraftingTabletRecipeTransferHandler(PedestalRecipeTier.BASIC, transferHelper), PEDESTAL_BASIC);
-		registration.addRecipeTransferHandler(new CraftingTabletRecipeTransferHandler(PedestalRecipeTier.SIMPLE, transferHelper), PEDESTAL_SIMPLE);
-		registration.addRecipeTransferHandler(new CraftingTabletRecipeTransferHandler(PedestalRecipeTier.ADVANCED, transferHelper), PEDESTAL_ADVANCED);
-		registration.addRecipeTransferHandler(new CraftingTabletRecipeTransferHandler(PedestalRecipeTier.COMPLEX, transferHelper), PEDESTAL_COMPLEX);
+		registration.addRecipeTransferHandler(new CraftingTabletRecipeTransferHandler(PedestalTier.BASIC, transferHelper), PEDESTAL_BASIC);
+		registration.addRecipeTransferHandler(new CraftingTabletRecipeTransferHandler(PedestalTier.SIMPLE, transferHelper), PEDESTAL_SIMPLE);
+		registration.addRecipeTransferHandler(new CraftingTabletRecipeTransferHandler(PedestalTier.ADVANCED, transferHelper), PEDESTAL_ADVANCED);
+		registration.addRecipeTransferHandler(new CraftingTabletRecipeTransferHandler(PedestalTier.COMPLEX, transferHelper), PEDESTAL_COMPLEX);
 		registration.addRecipeTransferHandler(CraftingTabletScreenHandler.class, PastelScreenHandlerTypes.CRAFTING_TABLET, RecipeTypes.CRAFTING, 0, 9, 15, 36);
 		registration.addRecipeTransferHandler(new GatedRecipeTransferInfo<>(PotionWorkshopScreenHandler.class, PastelScreenHandlerTypes.POTION_WORKSHOP, POTION_WORKSHOP_BREWING, 0, 9, 21, 36));
 		registration.addRecipeTransferHandler(new GatedRecipeTransferInfo<>(PotionWorkshopScreenHandler.class, PastelScreenHandlerTypes.POTION_WORKSHOP, POTION_WORKSHOP_CRAFTING, 0, 9, 21, 36));
@@ -269,6 +286,10 @@ public class PastelJEI implements IModPlugin {
 
 	@Override
 	public void registerGuiHandlers(IGuiHandlerRegistration registration) {
+		if(checkDisabled()) {
+			return;
+		}
+
 		registration.addGuiContainerHandler(PedestalScreen.class, new PedestalRecipeClickAreaHandler());
 		registration.addGuiContainerHandler(CraftingTabletScreen.class, new CraftingTabletRecipeClickAreaHandler());
 		registration.addRecipeClickArea(PotionWorkshopScreen.class, 28, 41, 12, 42, POTION_WORKSHOP_BREWING, POTION_WORKSHOP_CRAFTING, POTION_WORKSHOP_REACTING);
@@ -283,5 +304,17 @@ public class PastelJEI implements IModPlugin {
 	@Override
 	public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
 		PastelJEI.jeiRuntime = jeiRuntime;
+	}
+
+	public boolean checkDisabled() {
+		if(ModList.get().isLoaded("rei_plugin_compatibilities")) {
+			LOGGER.warn("PastelJEI is disabled with REIPC as Pastel has native REI support");
+			return true;
+		}
+		if(ModList.get().isLoaded("emi")) {
+			LOGGER.warn("PastelJEI is disabled with EMI as Pastel has native EMI support");
+			return true;
+		}
+		return false;
 	}
 }

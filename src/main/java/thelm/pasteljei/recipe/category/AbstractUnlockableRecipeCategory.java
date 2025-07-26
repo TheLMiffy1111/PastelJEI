@@ -2,7 +2,8 @@ package thelm.pasteljei.recipe.category;
 
 import java.util.List;
 
-import de.dafuqs.revelationary.api.advancements.AdvancementHelper;
+import com.cmdpro.databank.DatabankUtils;
+
 import mezz.jei.api.gui.builder.IIngredientAcceptor;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
@@ -84,7 +85,7 @@ public abstract class AbstractUnlockableRecipeCategory<R> implements IRecipeCate
 	}
 
 	public boolean hasAdvancement(ResourceLocation advancement) {
-		return advancement == null || AdvancementHelper.hasAdvancementClient(advancement);
+		return advancement == null || DatabankUtils.hasAdvancementClient(advancement);
 	}
 
 	public RegistryAccess registryAccess() {

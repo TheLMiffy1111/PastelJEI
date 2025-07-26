@@ -3,21 +3,21 @@ package thelm.pasteljei.recipe.transfer;
 import earth.terrarium.pastel.inventories.PastelScreenHandlerTypes;
 import earth.terrarium.pastel.inventories.PedestalScreenHandler;
 import earth.terrarium.pastel.recipe.pedestal.PedestalRecipe;
-import earth.terrarium.pastel.recipe.pedestal.PedestalRecipeTier;
+import earth.terrarium.pastel.recipe.pedestal.PedestalTier;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import thelm.pasteljei.PastelJEI;
 
 public class PedestalRecipeTransferInfo extends GatedRecipeTransferInfo<PedestalScreenHandler, PedestalRecipe> {
 
-	public final PedestalRecipeTier tier;
+	public final PedestalTier tier;
 
-	public PedestalRecipeTransferInfo(PedestalRecipeTier tier) {
+	public PedestalRecipeTransferInfo(PedestalTier tier) {
 		super(PedestalScreenHandler.class, PastelScreenHandlerTypes.PEDESTAL, getRecipeType(tier), 0, getRecipeSlotCount(tier), 16, 36);
 		this.tier = tier;
 	}
 
-	public static RecipeType<RecipeHolder<PedestalRecipe>> getRecipeType(PedestalRecipeTier tier) {
+	public static RecipeType<RecipeHolder<PedestalRecipe>> getRecipeType(PedestalTier tier) {
 		return switch(tier) {
 		case BASIC -> PastelJEI.PEDESTAL_BASIC;
 		case SIMPLE -> PastelJEI.PEDESTAL_SIMPLE;
@@ -26,7 +26,7 @@ public class PedestalRecipeTransferInfo extends GatedRecipeTransferInfo<Pedestal
 		};
 	}
 
-	public static int getRecipeSlotCount(PedestalRecipeTier tier) {
+	public static int getRecipeSlotCount(PedestalTier tier) {
 		return switch(tier) {
 		case BASIC, SIMPLE -> 12;
 		case ADVANCED -> 13;
@@ -36,6 +36,6 @@ public class PedestalRecipeTransferInfo extends GatedRecipeTransferInfo<Pedestal
 
 	@Override
 	public boolean canHandle(PedestalScreenHandler container, RecipeHolder<PedestalRecipe> recipeHolder) {
-		return super.canHandle(container, recipeHolder) && container.getPedestalRecipeTier().compareTo(tier) >= 0;
+		return super.canHandle(container, recipeHolder) && container.getTier().compareTo(tier) >= 0;
 	}
 }

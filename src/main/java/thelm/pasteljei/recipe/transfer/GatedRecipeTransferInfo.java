@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import de.dafuqs.revelationary.api.advancements.AdvancementHelper;
+import com.cmdpro.databank.DatabankUtils;
+
 import earth.terrarium.pastel.api.recipe.GatedRecipe;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.transfer.IRecipeTransferInfo;
@@ -83,6 +84,6 @@ public class GatedRecipeTransferInfo<C extends AbstractContainerMenu, R extends 
 	}
 
 	public boolean hasAdvancement(ResourceLocation advancement) {
-		return advancement == null || AdvancementHelper.hasAdvancementClient(advancement);
+		return advancement == null || DatabankUtils.hasAdvancementClient(advancement);
 	}
 }

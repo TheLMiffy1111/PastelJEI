@@ -6,7 +6,7 @@ import java.util.List;
 
 import earth.terrarium.pastel.PastelCommon;
 import earth.terrarium.pastel.inventories.PedestalScreen;
-import earth.terrarium.pastel.recipe.pedestal.PedestalRecipeTier;
+import earth.terrarium.pastel.recipe.pedestal.PedestalTier;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.gui.handlers.IGuiClickableArea;
 import mezz.jei.api.gui.handlers.IGuiContainerHandler;
@@ -17,7 +17,7 @@ public class PedestalRecipeClickAreaHandler implements IGuiContainerHandler<Pede
 
 	@Override
 	public Collection<IGuiClickableArea> getGuiClickableAreas(PedestalScreen containerScreen, double guiMouseX, double guiMouseY) {
-		PedestalRecipeTier tier = containerScreen.getMenu().getPedestalRecipeTier();
+		PedestalTier tier = containerScreen.getMenu().getTier();
 		List<RecipeType<?>> recipeTypes = new ArrayList<>();
 		recipeTypes.add(PastelJEI.PEDESTAL_BASIC);
 		if(tier.ordinal() > 0) {

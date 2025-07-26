@@ -3,7 +3,7 @@ package thelm.pasteljei.recipe.category;
 import java.util.List;
 
 import earth.terrarium.pastel.api.recipe.IngredientStack;
-import earth.terrarium.pastel.helpers.LoreHelper;
+import earth.terrarium.pastel.helpers.render.LoreHelper;
 import earth.terrarium.pastel.recipe.spirit_instiller.SpiritInstillerRecipe;
 import earth.terrarium.pastel.recipe.spirit_instiller.dynamic.spawner_manipulation.SpawnerChangeRecipe;
 import earth.terrarium.pastel.registries.PastelBlocks;

@@ -6,9 +6,9 @@ import java.util.List;
 import earth.terrarium.pastel.api.item.GemstoneColor;
 import earth.terrarium.pastel.api.recipe.IngredientStack;
 import earth.terrarium.pastel.inventories.PedestalScreen;
-import earth.terrarium.pastel.recipe.pedestal.BuiltinGemstoneColor;
+import earth.terrarium.pastel.recipe.pedestal.PastelGemstoneColor;
 import earth.terrarium.pastel.recipe.pedestal.PedestalRecipe;
-import earth.terrarium.pastel.recipe.pedestal.PedestalRecipeTier;
+import earth.terrarium.pastel.recipe.pedestal.PedestalTier;
 import earth.terrarium.pastel.registries.PastelBlocks;
 import mezz.jei.api.gui.builder.IIngredientAcceptor;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -46,7 +46,7 @@ public class PedestalRecipeCategory extends AbstractGatedRecipeCategory<Pedestal
 			new IngredientDrawable<>(PastelBlocks.PEDESTAL_BASIC_AMETHYST.toStack()),
 			new IngredientDrawable<>(PastelBlocks.PEDESTAL_BASIC_CITRINE.toStack()));
 
-	public final PedestalRecipeTier tier;
+	public final PedestalTier tier;
 	public final int powderSlotCount;
 
 	public final ResourceLocation background;
@@ -55,7 +55,7 @@ public class PedestalRecipeCategory extends AbstractGatedRecipeCategory<Pedestal
 	public final ResourceDrawable outputSlot;
 	public final ResourceDrawable tierOverlay;
 
-	public PedestalRecipeCategory(PedestalRecipeTier tier) {
+	public PedestalRecipeCategory(PedestalTier tier) {
 		super(getRecipeType(tier), getTitle(tier));
 		this.tier = tier;
 		powderSlotCount = tier.getPowderSlotCount();
@@ -76,7 +76,7 @@ public class PedestalRecipeCategory extends AbstractGatedRecipeCategory<Pedestal
 		tierOverlay = new ResourceDrawable(background, 200, 0, 40, 16);
 	}
 
-	public static RecipeType<RecipeHolder<PedestalRecipe>> getRecipeType(PedestalRecipeTier tier) {
+	public static RecipeType<RecipeHolder<PedestalRecipe>> getRecipeType(PedestalTier tier) {
 		return switch(tier) {
 		case BASIC -> PastelJEI.PEDESTAL_BASIC;
 		case SIMPLE -> PastelJEI.PEDESTAL_SIMPLE;
@@ -85,7 +85,7 @@ public class PedestalRecipeCategory extends AbstractGatedRecipeCategory<Pedestal
 		};
 	}
 
-	public static Component getTitle(PedestalRecipeTier tier) {
+	public static Component getTitle(PedestalTier tier) {
 		return switch(tier) {
 		case BASIC -> TITLE_BASIC;
 		case SIMPLE -> TITLE_SIMPLE;
@@ -101,7 +101,7 @@ public class PedestalRecipeCategory extends AbstractGatedRecipeCategory<Pedestal
 
 	@Override
 	public IDrawable getIcon() {
-		return tier == PedestalRecipeTier.BASIC ? BASIC_ICON : null;
+		return tier == PedestalTier.BASIC ? BASIC_ICON : null;
 	}
 
 	@Override
@@ -126,10 +126,10 @@ public class PedestalRecipeCategory extends AbstractGatedRecipeCategory<Pedestal
 		}
 		for(int i = 0; i < powderSlotCount; ++i) {
 			IIngredientAcceptor<?> slot = addSlot(builder, RecipeIngredientRole.INPUT, powderSlotX + i * 18, 60, powderSlots[i], visible);
-			GemstoneColor color = BuiltinGemstoneColor.values()[i];
+			GemstoneColor color = PastelGemstoneColor.values()[i];
 			int powderAmount = recipe.getPowderInputs().getOrDefault(color, 0);
 			if(powderAmount > 0) {
-				slot.addItemStack(new ItemStack(color.getGemstonePowderItem(), powderAmount));
+				slot.addItemStack(new ItemStack(color.getPowder(), powderAmount));
 			}
 		}
 		addItem(builder, RecipeIngredientRole.OUTPUT, 101, 19, recipe.getResultItem(registryAccess()), outputSlot, visible);
