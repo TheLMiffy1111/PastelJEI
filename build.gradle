@@ -123,7 +123,7 @@ def specVersion = "21.1"
 def vendor = "thelm"
 
 group = "thelm.pasteljei"
-version = "21.1.1"
+version = "21.1.2"
 
 archivesBaseName = modName
 
@@ -164,24 +164,24 @@ dependencies {
 		officialMojangMappings()
 		parchment "org.parchmentmc.data:parchment-1.21.1:2024.11.17@zip"
 	}
-	neoForge "net.neoforged:neoforge:21.1.180"
+	neoForge "net.neoforged:neoforge:21.1.194"
 
 	// Cloth Config
 	implementation "dev.architectury:architectury-neoforge:13.0.8"
 	implementation "me.shedaniel.cloth:cloth-config-neoforge:15.0.140"
 
 	// JEI
-	implementation("mezz.jei:jei-1.21.1-neoforge:19.21.2.313") {transitive = false}
-	include(implementation("thelm.jeidrawables:JEIDrawables-NeoForge:21.1.1"))
+	implementation("mezz.jei:jei-1.21.1-neoforge:19.22.0.315") {transitive = false}
+	include(implementation("thelm.jeidrawables:JEIDrawables-NeoForge:21.1.2"))
 
 	// Pastel Dependencies
-	implementation "curse.maven:databank-1181408:6814455"
-	implementation("com.klikli_dev:modonomicon-1.21.1-neoforge:1.114.4") {transitive = false}
+	implementation "curse.maven:databank-1181408:6814864"
+	implementation("com.klikli_dev:modonomicon-1.21.1-neoforge:1.114.5") {transitive = false}
 	implementation "top.theillusivec4.curios:curios-neoforge:9.5.1+1.21.1"
 	implementation "curse.maven:yeetusexperimentus-635427:5444189"
 
 	// Pastel
-	implementation "curse.maven:pastel-1264556:6809085"
+	implementation "curse.maven:pastel-1264556:6814735"
 }
 
 def replacements = [

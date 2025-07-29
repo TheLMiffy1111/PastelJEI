@@ -146,7 +146,7 @@ public abstract class AbstractUnlockableRecipeCategory<R> implements IRecipeCate
 			acceptor.addFluidStack(stack.getFluid(), amount, stack.getComponentsPatch());
 		}
 		if(acceptor instanceof IRecipeSlotBuilder slot) {
-			slot.setFluidRenderer(amount, false, 16, 16);
+			slot.setFluidRenderer(Math.max(amount, 1), false, 16, 16);
 		}
 		return acceptor;
 	}
