@@ -55,6 +55,7 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
+import mezz.jei.api.registration.ISubtypeRegistration;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -67,6 +68,9 @@ import thelm.pasteljei.gui.handler.CraftingTabletRecipeClickAreaHandler;
 import thelm.pasteljei.gui.handler.OverlayHidingExtraAreaHandler;
 import thelm.pasteljei.gui.handler.PedestalRecipeClickAreaHandler;
 import thelm.pasteljei.gui.handler.ShadowSlotGhostIngredientHandler;
+import thelm.pasteljei.ingredient.subtype.ExperienceStorageItemSubtypeInterpreter;
+import thelm.pasteljei.ingredient.subtype.InkStorageItemSubtypeInterpreter;
+import thelm.pasteljei.ingredient.subtype.UnstableItemSubtypeInterpreter;
 import thelm.pasteljei.recipe.BlockConversionRecipe;
 import thelm.pasteljei.recipe.BlockConversionWithChanceRecipe;
 import thelm.pasteljei.recipe.category.AnvilCrushingRecipeCategory;
@@ -128,6 +132,29 @@ public class PastelJEI implements IModPlugin {
 	@Override
 	public ResourceLocation getPluginUid() {
 		return UID;
+	}
+
+	@Override
+	public void registerItemSubtypes(ISubtypeRegistration registration) {
+		if(checkDisabled()) {
+			return;
+		}
+
+		registration.registerSubtypeInterpreter(PastelItems.KNOWLEDGE_GEM.get(), new ExperienceStorageItemSubtypeInterpreter());
+		registration.registerSubtypeInterpreter(PastelItems.MIDNIGHT_ABERRATION.get(), new UnstableItemSubtypeInterpreter());
+
+		InkStorageItemSubtypeInterpreter ink = new InkStorageItemSubtypeInterpreter();
+		registration.registerSubtypeInterpreter(PastelItems.INK_FLASK.get(), ink);
+		registration.registerSubtypeInterpreter(PastelItems.INK_ASSORTMENT.get(), ink);
+		registration.registerSubtypeInterpreter(PastelItems.PIGMENT_PALETTE.get(), ink);
+		registration.registerSubtypeInterpreter(PastelItems.ARTISTS_PALETTE.get(), ink);
+		registration.registerSubtypeInterpreter(PastelItems.SHIELDGRASP_AMULET.get(), ink);
+		registration.registerSubtypeInterpreter(PastelItems.HEARTSINGERS_REWARD.get(), ink);
+		registration.registerSubtypeInterpreter(PastelItems.GLOVES_OF_DAWNS_GRASP.get(), ink);
+		registration.registerSubtypeInterpreter(PastelItems.RING_OF_PURSUIT.get(), ink);
+		registration.registerSubtypeInterpreter(PastelItems.RING_OF_DENSER_STEPS.get(), ink);
+		registration.registerSubtypeInterpreter(PastelItems.RING_OF_AERIAL_GRACE.get(), ink);
+		registration.registerSubtypeInterpreter(PastelItems.LAURELS_OF_SERENITY.get(), ink);
 	}
 
 	@Override
