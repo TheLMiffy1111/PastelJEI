@@ -16,7 +16,7 @@ public abstract class AbstractGatedRecipeCategory<R extends GatedRecipe<?>> exte
 
 	@Override
 	public boolean isUnlocked(RecipeHolder<R> recipeHolder) {
-		return hasAdvancement(recipeHolder.value().getRecipeTypeUnlockIdentifier()) && hasAdvancement(recipeHolder.value().getRequiredAdvancementIdentifier().orElse(null));
+		return hasAdvancement(recipeHolder.value().typeAdvancementID()) && hasAdvancement(recipeHolder.value().advancementID().orElse(null));
 	}
 
 	@Override

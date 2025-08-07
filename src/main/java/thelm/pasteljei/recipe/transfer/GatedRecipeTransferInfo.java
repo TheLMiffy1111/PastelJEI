@@ -76,7 +76,7 @@ public class GatedRecipeTransferInfo<C extends AbstractContainerMenu, R extends 
 	}
 
 	public boolean isUnlocked(RecipeHolder<R> recipeHolder) {
-		return hasAdvancement(recipeHolder.value().getRecipeTypeUnlockIdentifier()) && hasAdvancement(recipeHolder.value().getRequiredAdvancementIdentifier().orElse(null));
+		return hasAdvancement(recipeHolder.value().typeAdvancementID()) && hasAdvancement(recipeHolder.value().advancementID().orElse(null));
 	}
 
 	public boolean isVisible(RecipeHolder<R> recipeHolder) {

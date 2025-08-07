@@ -28,7 +28,7 @@ issueTrackerURL = "https://github.com/TheLMiffy1111/PastelJEI/issues"
 
 [[dependencies.pasteljei]]
 	modId = "pastel"
-	versionRange = "[1.1,)"
+	versionRange = "[1.1.4,)"
 	type = "required"
 
 [[dependencies.pasteljei]]
