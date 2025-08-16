@@ -33,7 +33,7 @@ public class SpiritInstillerRecipeCategory extends AbstractGatedRecipeCategory<S
 
 	@Override
 	public int getHeight() {
-		return 48;
+		return 45;
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class SpiritInstillerRecipeCategory extends AbstractGatedRecipeCategory<S
 			SpiritInstillerRecipe recipe = recipeHolder.value();
 			Font font = font();
 			Component timeComponent = getTimeComponent(recipe.getCraftingTime(), recipe.getExperience());
-			guiGraphics.drawString(font, timeComponent, getWidth() / 2 - font.width(timeComponent) / 2, 38, 0x3F3F3F, false);
+			guiGraphics.drawString(font, timeComponent, getWidth() / 2 - font.width(timeComponent) / 2, 36, 0x3F3F3F, false);
 		}
 	}
 }

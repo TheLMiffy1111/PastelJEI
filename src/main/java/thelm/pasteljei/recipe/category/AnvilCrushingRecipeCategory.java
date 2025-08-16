@@ -39,24 +39,24 @@ public class AnvilCrushingRecipeCategory extends AbstractGatedRecipeCategory<Anv
 
 	@Override
 	public int getHeight() {
-		return 64;
+		return 59;
 	}
 
 	@Override
 	public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<AnvilCrushingRecipe> recipeHolder, IFocusGroup focuses) {
 		boolean visible = isVisible(recipeHolder);
 		AnvilCrushingRecipe recipe = recipeHolder.value();
-		addItem(builder, RecipeIngredientRole.INPUT, 32, 31, recipe.getIngredients().get(0), JEIDrawables.SLOT, visible);
-		addItem(builder, RecipeIngredientRole.CATALYST, 32, 11, new ItemStack(Items.ANVIL), visible);
-		addItem(builder, RecipeIngredientRole.OUTPUT, 105, 16, recipe.getResultItem(registryAccess()), JEIDrawables.OUTPUT_SLOT, visible);
+		addItem(builder, RecipeIngredientRole.INPUT, 32, 30, recipe.getIngredients().get(0), JEIDrawables.SLOT, visible);
+		addItem(builder, RecipeIngredientRole.CATALYST, 32, 10, new ItemStack(Items.ANVIL), visible);
+		addItem(builder, RecipeIngredientRole.OUTPUT, 105, 15, recipe.getResultItem(registryAccess()), JEIDrawables.OUTPUT_SLOT, visible);
 	}
 
 	@Override
 	public void createRecipeExtras(IRecipeExtrasBuilder builder, RecipeHolder<AnvilCrushingRecipe> recipeHolder, IFocusGroup focuses) {
 		if(isVisible(recipeHolder)) {
 			builder.addDrawable(WALL, 10, 0);
-			builder.addDrawable(FALL, 32, 1);
-			builder.addDrawable(JEIDrawables.RECIPE_ARROW, 60, 16);
+			builder.addDrawable(FALL, 32, 0);
+			builder.addDrawable(JEIDrawables.RECIPE_ARROW, 60, 15);
 		}
 	}
 
@@ -68,8 +68,8 @@ public class AnvilCrushingRecipeCategory extends AbstractGatedRecipeCategory<Anv
 			Font font = font();
 			Component xpComponent = Component.translatable("container.pastel.rei.anvil_crushing.plus_xp", recipe.getExperience());
 			Component forceComponent = getForceComponent(recipe);
-			guiGraphics.drawString(font, xpComponent, 126 - font.width(xpComponent), 40, 0x3F3F3F, false);
-			guiGraphics.drawString(font, forceComponent, getWidth() / 2 - font.width(forceComponent) / 2, 54, 0x3F3F3F, false);
+			guiGraphics.drawString(font, xpComponent, 126 - font.width(xpComponent), 38, 0x3F3F3F, false);
+			guiGraphics.drawString(font, forceComponent, getWidth() / 2 - font.width(forceComponent) / 2, 50, 0x3F3F3F, false);
 		}
 	}
 

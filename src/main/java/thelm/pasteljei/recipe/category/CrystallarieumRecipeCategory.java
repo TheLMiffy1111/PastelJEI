@@ -59,7 +59,7 @@ public class CrystallarieumRecipeCategory extends AbstractGatedRecipeCategory<Cr
 
 	@Override
 	public int getHeight() {
-		return 100;
+		return 99;
 	}
 
 	@Override

@@ -75,7 +75,7 @@ public class EnchanterRecipeCategory extends AbstractGatedRecipeCategory<Enchant
 			ALTAR.draw(guiGraphics, 15, 13);
 			Font font = font();
 			Component timeComponent = getTimeComponent(recipe.getCraftingTime(1));
-			guiGraphics.drawString(font, timeComponent, 69, 70, 0x3F3F3F, false);
+			guiGraphics.drawString(font, timeComponent, 69, 71, 0x3F3F3F, false);
 		}
 	}
 }

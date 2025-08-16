@@ -218,7 +218,7 @@ public class EnchantmentUpgradeRecipeCategory extends AbstractGatedRecipeCategor
 			Component levelComponent = Component.translatable("container.pastel.rei.enchantment_upgrade.level", index, index + 1);
 			Component reqComponent = Component.translatable("container.pastel.rei.enchantment_upgrade.required_item_count", recipe.getItemScaling().apply(index));
 			guiGraphics.drawString(font, levelComponent, 69, 2, index >= recipe.getEnchantment().value().getMaxLevel() ? 0xDB3564 : 0x3F3F3F, false);
-			guiGraphics.drawString(font, reqComponent, 69, 70, 0x3F3F3F, false);
+			guiGraphics.drawString(font, reqComponent, 69, 71, 0x3F3F3F, false);
 		}
 
 		@Override

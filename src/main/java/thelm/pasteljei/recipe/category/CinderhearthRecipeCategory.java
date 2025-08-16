@@ -34,7 +34,7 @@ public class CinderhearthRecipeCategory extends AbstractGatedRecipeCategory<Cind
 
 	@Override
 	public int getHeight() {
-		return 54;
+		return 51;
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class CinderhearthRecipeCategory extends AbstractGatedRecipeCategory<Cind
 				}
 			}
 			Component timeComponent = getTimeComponent(recipe.getCraftingTime(), recipe.getExperience());
-			guiGraphics.drawString(font, timeComponent, getWidth() / 2 - font.width(timeComponent) / 2, 44, 0x3F3F3F, false);
+			guiGraphics.drawString(font, timeComponent, getWidth() / 2 - font.width(timeComponent) / 2, 42, 0x3F3F3F, false);
 		}
 	}
 }

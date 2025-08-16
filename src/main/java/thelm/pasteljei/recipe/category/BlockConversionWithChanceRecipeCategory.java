@@ -28,7 +28,7 @@ public class BlockConversionWithChanceRecipeCategory extends AbstractUnlockableR
 
 	@Override
 	public int getHeight() {
-		return 39;
+		return 38;
 	}
 
 	@Override

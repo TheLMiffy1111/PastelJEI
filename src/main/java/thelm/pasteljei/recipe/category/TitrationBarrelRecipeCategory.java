@@ -33,7 +33,7 @@ public class TitrationBarrelRecipeCategory extends AbstractGatedRecipeCategory<I
 
 	@Override
 	public int getHeight() {
-		return 50;
+		return 49;
 	}
 
 	@Override

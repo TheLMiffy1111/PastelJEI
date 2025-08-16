@@ -96,7 +96,7 @@ public class PedestalRecipeCategory extends AbstractGatedRecipeCategory<Pedestal
 
 	@Override
 	public int getHeight() {
-		return 90;
+		return 89;
 	}
 
 	@Override
