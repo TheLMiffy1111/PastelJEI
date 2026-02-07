@@ -125,7 +125,7 @@ public class EnchantmentUpgradeRecipeCategory extends AbstractGatedRecipeCategor
 		if(isVisible(recipeHolder)) {
 			EnchantmentUpgradeRecipe recipe = recipeHolder.value();
 			if(recipe.getLevelCap() > recipe.getEnchantment().value().getMaxLevel() &&
-					hasAdvancement(PastelAdvancements.OVERENCHANTING) &&
+					hasAdvancement(PastelAdvancements.Milestones.UNLOCK_OVERENCHANTING_WITH_ENCHANTER) &&
 					mouseX >= 3 && mouseX < 19 && mouseY >= 1 && mouseY < 17) {
 				tooltip.add(TOOLTIP);
 			}
@@ -173,7 +173,7 @@ public class EnchantmentUpgradeRecipeCategory extends AbstractGatedRecipeCategor
 		}
 
 		public boolean increase() {
-			int cap = hasAdvancement(PastelAdvancements.OVERENCHANTING) ? recipe.getLevelCap() : recipe.getEnchantment().value().getMaxLevel();
+			int cap = hasAdvancement(PastelAdvancements.Milestones.UNLOCK_OVERENCHANTING_WITH_ENCHANTER) ? recipe.getLevelCap() : recipe.getEnchantment().value().getMaxLevel();
 			int newIndex = Math.clamp(index + 1, 1, cap - 1);
 			if(index == newIndex) {
 				return false;
@@ -184,7 +184,7 @@ public class EnchantmentUpgradeRecipeCategory extends AbstractGatedRecipeCategor
 		}
 
 		public boolean decrease() {
-			int cap = hasAdvancement(PastelAdvancements.OVERENCHANTING) ? recipe.getLevelCap() : recipe.getEnchantment().value().getMaxLevel();
+			int cap = hasAdvancement(PastelAdvancements.Milestones.UNLOCK_OVERENCHANTING_WITH_ENCHANTER) ? recipe.getLevelCap() : recipe.getEnchantment().value().getMaxLevel();
 			int newLevel = Math.clamp(index - 1, 1, cap - 1);
 			if(index == newLevel) {
 				return false;
@@ -211,7 +211,7 @@ public class EnchantmentUpgradeRecipeCategory extends AbstractGatedRecipeCategor
 			for(IRecipeSlotDrawable slot : slots) {
 				slot.draw(guiGraphics);
 			}
-			if(hasAdvancement(PastelAdvancements.OVERENCHANTING)) {
+			if(hasAdvancement(PastelAdvancements.Milestones.UNLOCK_OVERENCHANTING_WITH_ENCHANTER)) {
 				OVERENCHANT.draw(guiGraphics, 3, 1);
 			}
 			Font font = font();
