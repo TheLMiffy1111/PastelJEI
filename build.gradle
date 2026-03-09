@@ -25,27 +25,6 @@ repositories {
 	exclusiveContent {
 		forRepository {
 			maven {
-				url = "https://maven.nucleoid.xyz/"
-			}
-		}
-		filter {
-			includeGroup "eu.pb4"
-		}
-	}
-	exclusiveContent {
-		forRepository {
-			maven {
-				url = "https://maven.terraformersmc.com/"
-			}
-		}
-		filter {
-			includeGroup "com.terraformersmc"
-			includeGroup "dev.emi"
-		}
-	}
-	exclusiveContent {
-		forRepository {
-			maven {
 				url = "https://maven.blamejared.com/"
 			}
 		}
@@ -72,16 +51,6 @@ repositories {
 		filter {
 			includeGroup "dev.architectury"
 			includeGroup "me.shedaniel.cloth"
-		}
-	}
-	exclusiveContent {
-		forRepository {
-			maven {
-				url = "https://maven.resourcefulbees.com/repository/terrarium/"
-			}
-		}
-		filter {
-			includeGroup "earth.terrarium"
 		}
 	}
 	exclusiveContent {
@@ -123,7 +92,7 @@ def specVersion = "21.1"
 def vendor = "thelm"
 
 group = "thelm.pasteljei"
-version = "21.1.6"
+version = "21.1.7"
 
 def archivesName = modName
 base.archivesName = archivesName

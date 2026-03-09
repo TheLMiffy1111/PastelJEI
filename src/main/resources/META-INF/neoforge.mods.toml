@@ -10,6 +10,7 @@ issueTrackerURL = "https://github.com/TheLMiffy1111/PastelJEI/issues"
 	description = "An addon to Pastel that adds JEI support."
 	logoFile = "pasteljei.logo.png"
 	authors = "TheLMiffy1111"
+	displayURL = "https://www.curseforge.com/minecraft/mc-mods/pasteljei"
 
 [[dependencies.pasteljei]]
 	modId = "minecraft"

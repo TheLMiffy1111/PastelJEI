@@ -117,6 +117,11 @@ public class EnchantmentUpgradeRecipeCategory extends AbstractGatedRecipeCategor
 		super.draw(recipeHolder, recipeSlotsView, guiGraphics, mouseX, mouseY);
 		if(isVisible(recipeHolder)) {
 			ALTAR.draw(guiGraphics, 15, 13);
+			EnchantmentUpgradeRecipe recipe = recipeHolder.value();
+			if(recipe.getLevelCap() > recipe.getEnchantment().value().getMaxLevel() &&
+					hasAdvancement(PastelAdvancements.Milestones.UNLOCK_OVERENCHANTING_WITH_ENCHANTER)) {
+				OVERENCHANT.draw(guiGraphics, 3, 1);
+			}
 		}
 	}
 
@@ -210,9 +215,6 @@ public class EnchantmentUpgradeRecipeCategory extends AbstractGatedRecipeCategor
 		public void drawWidget(GuiGraphics guiGraphics, double mouseX, double mouseY) {
 			for(IRecipeSlotDrawable slot : slots) {
 				slot.draw(guiGraphics);
-			}
-			if(hasAdvancement(PastelAdvancements.Milestones.UNLOCK_OVERENCHANTING_WITH_ENCHANTER)) {
-				OVERENCHANT.draw(guiGraphics, 3, 1);
 			}
 			Font font = font();
 			Component levelComponent = Component.translatable("container.pastel.rei.enchantment_upgrade.level", index, index + 1);

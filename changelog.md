@@ -1,1 +1,1 @@
-Update to Pastel 1.1.5.x  
+Fix overenchanting icon showing up in recipes that don't support overenchanting  
