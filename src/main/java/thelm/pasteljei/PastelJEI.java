@@ -70,6 +70,7 @@ import thelm.pasteljei.gui.handler.PedestalRecipeClickAreaHandler;
 import thelm.pasteljei.gui.handler.ShadowSlotGhostIngredientHandler;
 import thelm.pasteljei.ingredient.subtype.ExperienceStorageItemSubtypeInterpreter;
 import thelm.pasteljei.ingredient.subtype.InkStorageItemSubtypeInterpreter;
+import thelm.pasteljei.ingredient.subtype.MemoryItemSubtypeInterpreter;
 import thelm.pasteljei.ingredient.subtype.UnstableItemSubtypeInterpreter;
 import thelm.pasteljei.recipe.BlockConversionRecipe;
 import thelm.pasteljei.recipe.BlockConversionWithChanceRecipe;
@@ -91,7 +92,7 @@ import thelm.pasteljei.recipe.category.SpiritInstillerRecipeCategory;
 import thelm.pasteljei.recipe.category.TitrationBarrelRecipeCategory;
 import thelm.pasteljei.recipe.transfer.CraftingTabletRecipeTransferHandler;
 import thelm.pasteljei.recipe.transfer.GatedRecipeTransferInfo;
-import thelm.pasteljei.recipe.transfer.PedestalRecipeTransferInfo;
+import thelm.pasteljei.recipe.transfer.PedestalRecipeTransferHandler;
 
 @JeiPlugin
 public class PastelJEI implements IModPlugin {
@@ -142,6 +143,7 @@ public class PastelJEI implements IModPlugin {
 
 		registration.registerSubtypeInterpreter(PastelItems.KNOWLEDGE_GEM.get(), new ExperienceStorageItemSubtypeInterpreter());
 		registration.registerSubtypeInterpreter(PastelItems.MIDNIGHT_ABERRATION.get(), new UnstableItemSubtypeInterpreter());
+		registration.registerSubtypeInterpreter(PastelBlocks.MEMORY.asItem(), new MemoryItemSubtypeInterpreter());
 
 		InkStorageItemSubtypeInterpreter ink = new InkStorageItemSubtypeInterpreter();
 		registration.registerSubtypeInterpreter(PastelItems.INK_FLASK.get(), ink);
@@ -249,10 +251,10 @@ public class PastelJEI implements IModPlugin {
 		}
 
 		IRecipeTransferHandlerHelper transferHelper = registration.getTransferHelper();
-		registration.addRecipeTransferHandler(new PedestalRecipeTransferInfo(PedestalTier.BASIC));
-		registration.addRecipeTransferHandler(new PedestalRecipeTransferInfo(PedestalTier.SIMPLE));
-		registration.addRecipeTransferHandler(new PedestalRecipeTransferInfo(PedestalTier.ADVANCED));
-		registration.addRecipeTransferHandler(new PedestalRecipeTransferInfo(PedestalTier.COMPLEX));
+		registration.addRecipeTransferHandler(new PedestalRecipeTransferHandler(PedestalTier.BASIC, transferHelper), PEDESTAL_BASIC);
+		registration.addRecipeTransferHandler(new PedestalRecipeTransferHandler(PedestalTier.SIMPLE, transferHelper), PEDESTAL_SIMPLE);
+		registration.addRecipeTransferHandler(new PedestalRecipeTransferHandler(PedestalTier.ADVANCED, transferHelper), PEDESTAL_ADVANCED);
+		registration.addRecipeTransferHandler(new PedestalRecipeTransferHandler(PedestalTier.COMPLEX, transferHelper), PEDESTAL_COMPLEX);
 		registration.addRecipeTransferHandler(PedestalScreenHandler.class, PastelScreenHandlerTypes.PEDESTAL, RecipeTypes.CRAFTING, 0, 9, 16, 36);
 		registration.addRecipeTransferHandler(new CraftingTabletRecipeTransferHandler(PedestalTier.BASIC, transferHelper), PEDESTAL_BASIC);
 		registration.addRecipeTransferHandler(new CraftingTabletRecipeTransferHandler(PedestalTier.SIMPLE, transferHelper), PEDESTAL_SIMPLE);

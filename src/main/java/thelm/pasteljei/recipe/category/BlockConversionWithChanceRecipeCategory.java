@@ -62,7 +62,6 @@ public class BlockConversionWithChanceRecipeCategory extends AbstractUnlockableR
 
 	@Override
 	public ResourceLocation getRegistryName(BlockConversionWithChanceRecipe recipe) {
-		ResourceLocation blockKey = BuiltInRegistries.BLOCK.getKey(recipe.input().getBlock());
-		return ResourceLocation.parse("%s/%s/%s".formatted(recipeType.getUid(), blockKey.getNamespace(), blockKey.getPath()));
+		return BuiltInRegistries.BLOCK.getKey(recipe.input().getBlock());
 	}
 }

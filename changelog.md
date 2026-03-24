@@ -1,1 +1,3 @@
-Fix overenchanting icon showing up in recipes that don't support overenchanting  
+Added memory subtype interpreter  
+Ignore powders in pedestal recipe transfer  
+Simplified conversion recipe id  
