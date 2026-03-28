@@ -135,7 +135,7 @@ dependencies {
 
 	// JEI
 	implementation("mezz.jei:jei-1.21.1-neoforge:19.27.0.340") {transitive = false}
-	include(implementation("thelm.jeidrawables:JEIDrawables-NeoForge:21.1.5"))
+	include(implementation("thelm.jeidrawables:JEIDrawables-NeoForge:21.1.7"))
 
 	// Pastel Dependencies
 	implementation "curse.maven:databank-1181408:7316426"
