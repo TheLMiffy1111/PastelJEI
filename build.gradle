@@ -138,7 +138,7 @@ dependencies {
 	include(implementation("thelm.jeidrawables:JEIDrawables-NeoForge:21.1.7"))
 
 	// Pastel Dependencies
-	implementation "curse.maven:databank-1181408:7316426"
+	implementation "curse.maven:databank-1181408:8039021"
 	implementation "curse.maven:exclusions-lib-1108052:7502579"
 	implementation "dev.architectury:architectury-neoforge:13.0.8"
 	implementation "me.shedaniel.cloth:cloth-config-neoforge:15.0.140"
