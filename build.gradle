@@ -4,7 +4,7 @@ plugins {
 	id "idea"
 	id "maven-publish"
 	id "com.crystaelix.blossom" version "1.3.2"
-	id "me.modmuss50.mod-publish-plugin" version "1.1.0"
+	id "me.modmuss50.mod-publish-plugin" version "2.1.1"
 }
 
 repositories {
@@ -131,10 +131,10 @@ dependencies {
 		officialMojangMappings()
 		parchment "org.parchmentmc.data:parchment-1.21.1:2024.11.17@zip"
 	}
-	neoForge "net.neoforged:neoforge:21.1.227"
+	neoForge "net.neoforged:neoforge:21.1.234"
 
 	// JEI
-	implementation("mezz.jei:jei-1.21.1-neoforge:19.27.0.340") {transitive = false}
+	implementation("mezz.jei:jei-1.21.1-neoforge:19.27.0.346") {transitive = false}
 	include(implementation("thelm.jeidrawables:JEIDrawables-NeoForge:21.1.7"))
 
 	// Pastel Dependencies
@@ -215,6 +215,7 @@ publishMods {
 		accessToken = providers.gradleProperty("curseforge.token")
 		projectId = "1297526"
 		minecraftVersions.add(mcVersion)
+		client = true
 		requires "jei", "pastel"
 		incompatible "roughly-enough-items-hacks", "emi"
 	}
